@@ -1,0 +1,28 @@
+galaxy_info:
+  namespace: kilip
+  name: template
+  author: kilip
+  description: Role TEMPLATE
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+        - bullseye
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - jammy
+  galaxy_tags: []
+
+dependencies: []
