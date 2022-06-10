@@ -1,6 +1,6 @@
 galaxy_info:
   namespace: kilip
-  name: proxy
+  role_name: proxy
   author: kilip
   description: Role Proxy
   license: MIT
