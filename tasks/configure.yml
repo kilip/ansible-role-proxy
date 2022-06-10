@@ -1,0 +1,67 @@
+---
+- name: Ensure squid config dir exists
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0775"
+    owner: "{{ squid_user }}"
+    group: "{{ squid_user_group }}"
+  loop:
+    - /etc/squid
+    - /var/log/squid
+
+- name: Copy default cert
+  ansible.builtin.copy:
+    src: "ssl-cert"
+    dest: "/etc/squid"
+    mode: "0600"
+    owner: "{{ squid_user }}"
+    group: "{{ squid_user_group }}"
+
+- name: Fix ssl-cert dir permissions
+  ansible.builtin.file:
+    path: "/etc/squid/ssl-cert"
+    mode: "0700"
+    owner: "{{ squid_user }}"
+    group: "{{ squid_user_group }}"
+
+- name: Ensure cache dir exists
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ squid_user }}"
+    group: "{{ squid_user_group }}"
+    mode: "0775"
+  loop: "{{ squid_cache_dirs }}"
+  when: squid_cache_dirs | length > 0
+
+- name: Generate squid configuration
+  ansible.builtin.template:
+    src: squid.conf.j2
+    dest: "/etc/squid/squid.conf"
+    mode: "0644"
+
+- name: Generate log
+  ansible.builtin.command:
+    cmd: >
+      sudo -u proxy -- /usr/local/squid/libexec/security_file_certgen
+      -c -s /var/log/squid/ssl_db -M 20MB
+    creates: "/var/log/squid/ssl_db"
+
+#- name: Generate cache dir
+#  ansible.builtin.command:
+#    cmd: /usr/local/squid/sbin/squid -z
+#    creates: "{{ squid_cache_dirs[0] }}/00"
+#  when: squid_cache_dirs | length > 0
+
+- name: Create squid service file
+  ansible.builtin.template:
+    src: squid.service.j2
+    dest: /lib/systemd/system/squid.service
+    mode: "0644"
+
+- name: Ensure squid service enabled and started
+  ansible.builtin.service:
+    name: squid
+    #state: started
+    enabled: true

@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include template"
-      include_role:
-        name: "kilip.template"
+    - name: "Include proxy"
+      ansible.builtin.include_role:
+        name: "kilip.proxy"
+    

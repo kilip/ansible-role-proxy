@@ -4,12 +4,14 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: role-TEMPLATE
+  - name: role-proxy
     image: kilip/molecule-${MOLECULE_DIST:-ubuntu-22.04}
     pre_build_image: true
     privileged: true
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - 3128:3128
 provisioner:
   name: ansible
 verifier:

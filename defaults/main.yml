@@ -1,2 +1,15 @@
 ---
-# defaults file for kilip.template
+# defaults file for kilip.proxy
+squid_version: "5.5"
+squid_download_url: "http://www.squid-cache.org/Versions/v5/squid-{{ squid_version }}.tar.gz"
+squid_build_dir: "/tmp/squid-{{ squid_version }}"
+
+squid_user: proxy
+squid_user_group: proxy
+
+squid_cache_size: 20000 # 20GB
+squid_cache_dirs:
+  - /srv/proxy/cache1
+  - /srv/proxy/cache2
+  - /srv/proxy/cache3
+  - /srv/proxy/cache4

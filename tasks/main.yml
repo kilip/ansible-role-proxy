@@ -1,2 +1,47 @@
 ---
-# tasks file for kilip.template
+- name: Check squid install status
+  ansible.builtin.stat:
+    path: "/usr/local/squid"
+  register: squid_stat
+
+- name: Check openssl-1.1
+  ansible.builtin.stat:
+    path: "/usr/local/openssl-1.1"
+  register: openssl_stat
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 600
+
+- name: Install required squid build package
+  ansible.builtin.package:
+    name:
+      - build-essential
+      - openssl
+      - libssl-dev
+      - pkg-config
+      - unzip
+    state: present
+
+- name: Include compile openssl-1.1 tasks
+  ansible.builtin.include_tasks: openssl.yml
+  when: not openssl_stat.stat.exists
+
+- name: Include compile squid tasks
+  ansible.builtin.include_tasks: compile.yml
+  when: not squid_stat.stat.exists
+
+- name: Ensure squid user group exists
+  ansible.builtin.group:
+    name: "{{ squid_user_group }}"
+    state: present
+
+- name: Ensure squid user exists
+  ansible.builtin.user:
+    name: "{{ squid_user }}"
+    group: "{{ squid_user_group }}"
+    state: present
+
+- name: Include configure tasks
+  ansible.builtin.include_tasks: configure.yml

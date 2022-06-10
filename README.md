@@ -1,11 +1,11 @@
-Ansible Role: TEMPLATE
+Ansible Role: Proxy
 =========
 
-Ansible role TEMPLATE
+Ansible role Proxy
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kilip/ansible-role-template/CI?style=flat-square)](https://github.com/kilip/ansible-role-template/actions/workflows/ci.yml)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/kilip/ansible-role-workstation?style=flat-square)](https://github.com/kilip/ansible-role-template/releases)
-[![GitHub](https://img.shields.io/github/license/kilip/ansible-role-template?style=flat-square)](https://github.com/kilip/ansible-role-template/blob/main/LICENSE)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kilip/ansible-role-proxy/CI?style=flat-square)](https://github.com/kilip/ansible-role-proxy/actions/workflows/ci.yml)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/kilip/ansible-role-workstation?style=flat-square)](https://github.com/kilip/ansible-role-proxy/releases)
+[![GitHub](https://img.shields.io/github/license/kilip/ansible-role-proxy?style=flat-square)](https://github.com/kilip/ansible-role-proxy/blob/main/LICENSE)
 
 Requirements
 ------------
@@ -29,7 +29,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: kilip.TEMPLATE }
+         - { role: kilip.Proxy }
 
 License
 -------

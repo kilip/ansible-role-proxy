@@ -6,7 +6,7 @@ on:
 
 defaults:
   run:
-    working-directory: 'kilip.template'
+    working-directory: 'kilip.proxy'
 
 jobs:
   release:
@@ -15,7 +15,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v3
         with:
-          path: 'kilip.template'
+          path: 'kilip.proxy'
 
       - name: Set up Python 3.
         uses: actions/setup-python@v3

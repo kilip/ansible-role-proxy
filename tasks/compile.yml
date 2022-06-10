@@ -1,0 +1,41 @@
+---
+- name: Compile squid
+  block:
+    - name: Download squid source
+      ansible.builtin.get_url:
+        url: "{{ squid_download_url }}"
+        dest: "/tmp/squid.tar.gz"
+        mode: "0644"
+
+    - name: Extract squid source
+      ansible.builtin.unarchive:
+        src: "/tmp/squid.tar.gz"
+        dest: "/tmp"
+        remote_src: yes
+      changed_when: false
+
+    - name: Run squid configure
+      ansible.builtin.command:
+        cmd: >
+          ./configure
+          --with-default-user=proxy
+          --sysconfdir=/etc/squid
+          --with-logdir=/var/log/squid
+          --with-openssl=/usr/local/openssl-1.1/lib
+          --enable-ssl-crtd
+          --with-pidfile=/var/run/squid.pid
+        chdir: "{{ squid_build_dir }}"
+      changed_when: false
+
+    - name: Run make
+      community.general.make:
+        chdir: "{{ squid_build_dir }}"
+
+    - name: Run make Install
+      community.general.make:
+        chdir: "{{ squid_build_dir }}"
+        target: "install"
+  environment:
+    PATH: "/usr/local/openssl-1.1/bin:{{ ansible_env.PATH }}"
+    LD_LIBRARY_PATH: "/usr/local/openssl-1.1/lib"
+    PKG_CONFIG_PATH: "/usr/local/openssl-1.1/lib/pkgconfig"

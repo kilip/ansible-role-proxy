@@ -1,0 +1,40 @@
+---
+- name: Download openssl-1.1
+  ansible.builtin.get_url:
+    url: http://github.com/openssl/openssl/archive/refs/tags/OpenSSL_1_1_1j.zip
+    dest: "/tmp/openssl.zip"
+    mode: "0644"
+
+- name: Extract openssl-1.1
+  ansible.builtin.unarchive:
+    src: "/tmp/openssl.zip"
+    dest: "/tmp"
+    remote_src: yes
+  changed_when: false
+
+- name: Configure openssl-1.1
+  ansible.builtin.command:
+    cmd: "./config --prefix=/usr/local/openssl-1.1 --openssldir=/usr/local/openssl-1.1/ssl"
+    chdir: "/tmp/openssl-OpenSSL_1_1_1j"
+  changed_when: false
+
+- name: Run make on openssl-1.1
+  ansible.builtin.command:
+    cmd: "make"
+    chdir: "/tmp/openssl-OpenSSL_1_1_1j"
+  changed_when: false
+
+- name: Run make install on openssl-1.1
+  ansible.builtin.command:
+    cmd: "make install"
+    chdir: "/tmp/openssl-OpenSSL_1_1_1j"
+  changed_when: false
+
+- name: Symlink libcrypto.so.1.1
+  ansible.builtin.file:
+    src: "/usr/local/openssl-1.1/lib/{{ item }}"
+    dest: "/usr/lib/{{ item }}"
+    state: link
+  loop:
+    - libcrypto.so.1.1
+    - libssl.so.1.1
