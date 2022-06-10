@@ -4,7 +4,7 @@ Ansible Role: Proxy
 Ansible role Proxy
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kilip/ansible-role-proxy/CI?style=flat-square)](https://github.com/kilip/ansible-role-proxy/actions/workflows/ci.yml)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/kilip/ansible-role-workstation?style=flat-square)](https://github.com/kilip/ansible-role-proxy/releases)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/kilip/ansible-role-proxy?style=flat-square)](https://github.com/kilip/ansible-role-proxy/releases)
 [![GitHub](https://img.shields.io/github/license/kilip/ansible-role-proxy?style=flat-square)](https://github.com/kilip/ansible-role-proxy/blob/main/LICENSE)
 
 Requirements
